@@ -26,7 +26,7 @@ const createWindow = () => {
 // janela sobre
 let about // bug de abertura
 
-const aboutWindow = () => {       // Janela Principal
+const aboutWindow = () => {       
     // nativeTheme.themeSource ='dark'
     // se a janela about noa etiver aberta
     if (!about) {
@@ -41,6 +41,78 @@ const aboutWindow = () => {       // Janela Principal
     }
     //iniciar a janela com o menu personalizado
     about.loadFile('./src/views/sobre.html')
+    // bug2 
+    about.on('closed', () => {
+        about = null
+    })
+}
+
+// janela cliente
+let cliente // bug de abertura
+
+const abrir = () => {       
+    // nativeTheme.themeSource ='dark'
+    // se a janela about noa etiver aberta
+    if (!about) {
+        about = new BrowserWindow({
+            width: 800, 
+            height: 600,
+            icon: './src/public/img/pacote.png',
+            resizable: false, // evitar o redimensionamento
+           // titleBarStyle: 'hidden',  esconder barra de titulo e menu
+          autoHideMenuBar: true // esconder menu
+        })
+    }
+    //iniciar a janela com o menu personalizado
+    about.loadFile('./src/views/cliente.html')
+    // bug2 
+    about.on('closed', () => {
+        about = null
+    })
+}
+
+// janela fornecedores
+let fornecedores // bug de abertura
+
+const forne = () => {       
+    // nativeTheme.themeSource ='dark'
+    // se a janela about noa etiver aberta
+    if (!about) {
+        about = new BrowserWindow({
+            width: 800, 
+            height: 600,
+            icon: './src/public/img/pacote.png',
+            resizable: false, // evitar o redimensionamento
+           // titleBarStyle: 'hidden',  esconder barra de titulo e menu
+          autoHideMenuBar: true // esconder menu
+        })
+    }
+    //iniciar a janela com o menu personalizado
+    about.loadFile('./src/views/fornecedores.html')
+    // bug2 
+    about.on('closed', () => {
+        about = null
+    })
+}
+
+// janela produtos
+let produtos // bug de abertura
+
+const pro = () => {       
+    // nativeTheme.themeSource ='dark'
+    // se a janela about noa etiver aberta
+    if (!about) {
+        about = new BrowserWindow({
+            width: 800, 
+            height: 600,
+            icon: './src/public/img/pacote.png',
+            resizable: false, // evitar o redimensionamento
+           // titleBarStyle: 'hidden',  esconder barra de titulo e menu
+          autoHideMenuBar: true // esconder menu
+        })
+    }
+    //iniciar a janela com o menu personalizado
+    about.loadFile('./src/views/produtos.html')
     // bug2 
     about.on('closed', () => {
         about = null
@@ -88,17 +160,49 @@ const template = [
               label: 'sair',
               click: () => app.quit(),
               accelerator: 'Alt+F4'
-          }
+          },
+          {
+            label: 'cliente',
+            click: () => abrir()
+        },
+        {
+          label: 'fornecedores',
+          click: () => forne()
+      },
+      {
+        label: 'produtos',
+        click: () => pro()
+    },
       ]
   },
+  {
+    label: 'Exibir',
+    submenu: [
+        {
+            label: 'Recarregar',
+            role: 'reload'
+        }, {
+            label: 'Ferramentas do Desenvolvedor',
+            role: 'toggleDevTools'
+        }, {
+            type: 'separator'
+
+        }, {
+            label: 'aplicar zoom',
+            role: 'zoomIn'
+        }, {
+            label: 'Reduzir',
+            role: 'zoomOut'
+        }, {
+            label: 'Restaurar o zoom padrao',
+            role: 'resetZoom'
+        }
+    ]
+},
   
   {
       label: 'Ajuda',
       submenu: [
-          {
-              label: 'docs',
-              click: () => shell.openExternal('https://www.electronjs.org/docs/latest/')
-          },
           {
               type: 'separator'
           },

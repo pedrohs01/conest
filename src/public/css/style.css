@@ -1,0 +1,19 @@
+/*rodape*/
+footer {
+    background-color: #007acc;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+footer p {
+    color: #fff;
+    margin: 10px 0px 10px 10px;
+
+}
+
+img {
+    width: 150px;
+    height: 150px;
+    text-align: center;
+}
