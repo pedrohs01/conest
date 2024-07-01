@@ -1,4 +1,12 @@
-const { ipcRenderer } = require('electron')
+const { ipcRenderer,contextBridge } = require('electron')
+
+contextBridge.exposeInMainWorld('api', {
+    openAbout: () => ipcRenderer.send('open-about'),
+    openCliente: () => ipcRenderer.send('open-cliente'),
+    openFornecedores: () => ipcRenderer.send('open-fornecedores'),
+    openProduto: () => ipcRenderer.send('open-produto'),
+    openRelatorio: () => ipcRenderer.send('open-relatorio')
+})
 
 ipcRenderer.send('send-message', "status do banco de dados: ")
 
@@ -7,19 +15,6 @@ ipcRenderer.on('db-status', (event, status) => {
 })
 
 
-
-
-const { contextBridge, ipcRenderer } = require('electron')
- 
-// Gerenciamento de Processos (desempenho e segurança)
- 
-contextBridge.exposeInMainWorld('api', {
-    verElectron: () => process.versions.electron,
-    hello: () => ipcRenderer.send("send-message", "OIIIIII!!!!"),
-    openAbout: () => ipcRenderer.send('open-about')
-})
- 
- 
 // inserir data da pagina
 function obterData(){
     const data = new Date()

@@ -5,22 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- evitar ataques de Cross Site Scripting (injeção de dados)-->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
- 
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <title>Sobre</title>
 </head>
 <body>
-    <h1>Sobre</h1>
-    <p>Conest Controle de estoque</p>
-    <p>PEDRO HENRIQUE</p>
-    <p>Versão 1.0</p>
-    <p>MIT</p>
-    <img src="../public/img/licensemit.webp" alt="">
+    <div class="containerImg">
+        <img id="logoMit" src="../../src/public/img/licensemit.webp" alt="mit">
+    </div>
+    <div class="container">
+        <h1 id="textSobre">Sobre</h1>
+        <p id="textSobre">Conest - Controle de Estoque</p>
+        <p id="textSobre">Autor: Pedro</p>
+        <p id="textSobre">Version 1.0</p>
+    </div>
+    <footer id="footerAbout">
+        <button id="btnFechar" onclick="javascript:window.close()">OK</button>
+    </footer>
 
     <!-- bootstrap-->
     <script src="../public/js/bootstrap.min.js"></script>
-
-    <!-- css perosnal-->
-    <link rel="stylesheet" href="../public/css/style.css">
 </body>
 </html>

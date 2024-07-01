@@ -21,6 +21,7 @@
     "electron": "^31.0.1"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "mongoose": "^8.4.3"
   }
 }

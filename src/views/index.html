@@ -6,30 +6,27 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'">
     <!-- bootrep-->
     <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../public/css/style.css">
     <title>CONEST - Controle de estoque</title>
 </head>
 <body>
-    <h1>CONEST</h1>
-    <button class="btn btn-dark" onclick="sobre()">Sobre</button>
-    <br><br><br>
-    <a href="cliente.html" target="_blank"><img src="../public/img/cliente.png" alt="cliente"></a>
-
-    <a href="fornecedores.html" target="_blank"><img src="../public/img/fornecedores.png" alt="fornecedores"></a>
-
-    <a href="produtos.html" target="_blank"><img src="../public/img/produtos.png" alt="cliente"></a>
+    <div class="container">
+    <h1>CONEST</h1>       
+    <button class="btn" onclick="cliente()"><img src="../public/img/cliente.png" alt="cliente"></button>
+    <button class="btn" onclick="fornecedores()"><img src="../public/img/fornecedores.png" alt="fornecedores"></button>
+    <button class="btn" onclick="produtos()"><img src="../public/img/produtos.png" alt="produtos"></button>
+    <button class="btn" onclick="relatorio()"><img src="../public/img/relatorio.png" alt="relatorio"></button>
+    </div>  
 
     <footer>
         <p id="dataAtual"></p>
+        <img id="statusDb" src="../public/img/dboff.png" alt="database">
     </footer>
 
 
 
     <!-- bootstrap-->
     <script src="../public/js/bootstrap.min.js"></script>
-
-    <!-- css perosnal-->
-    <link rel="stylesheet" href="../public/css/style.css">
-
     <script src="./render.js"></script>
 </body>
 </html>

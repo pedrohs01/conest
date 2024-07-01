@@ -1,19 +1,102 @@
 /*rodape*/
 footer {
-    background-color: #007acc;
+    background-color: #9f95ba;
+    width: 100%;
+    height: 42px;
     position: fixed;
     bottom: 0;
-    width: 100%;
+    display: flex;
 }
+
+h1 {
+    color: #371F76;
+}
+
 
 footer p {
     color: #fff;
-    margin: 10px 0px 10px 10px;
+    margin: 10px 10px;
 
 }
 
-img {
-    width: 150px;
-    height: 150px;
+#statusDb {
+    position: fixed;
+    right: 0;
+    margin: 5px 10px;
+}
+
+footer img {
+    width: 30px;
+    height: 30px;
+
+}
+
+
+
+#logoMit {
+    width: 40px;
+    height: 40px;
+}
+
+#textSobre {
+    font-size: 10pt;
+}
+
+#footerAbout{
+    position: fixed;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0)
+}
+
+#btnFechar {
+    width: 60px;
+    height: 25px;
+    margin: 7px 10px 0;
+    font-size: 10pt;
+    right: 0;
+    position: fixed;
+}
+
+.containerImg {
     text-align: center;
+}
+
+#inputId {
+    display: none;
+}
+
+#btnReset {
+    width: 50px;
+    height: 50px;
+    background-image: url('../img/clear.png');
+    background-size: cover;
+    border: none;
+    margin-left: 30px;
+}
+
+#btnCep {
+    margin-top: 32px;
+}
+
+select {
+    margin-top: 8px;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* imagem do produto */
+
+#imageProduct {
+    border: 1px solid #dfdfdf;
+    border-radius: 5px;
+    width: 260px;
+    height: 260px;
+    padding: 4px;
+    position: fixed;
+    right: 45px;
+    bottom: 15px;
 }
