@@ -1,9 +1,14 @@
 const { ipcMain } = require('electron')
-const { app, BrowserWindow, Menu } = require('electron/main')
+const { app, BrowserWindow, Menu, dialog } = require('electron/main')
 const path = require('node:path')
 
 //conctar o banco de daodos
-const { conectar, desconectar } = require('./database.js')
+const { dbStatus, desconectar } = require('./database.js')
+
+
+let dbCon = null
+// importação do Schema
+const clienteModel = require('./src/models/Cliente.js')
 
 //janela principal (definir o objeto win como variavel)
 let win
@@ -67,7 +72,10 @@ const clienteWindow = () => {
             // titleBarStyle: 'hidden',  esconder barra de titulo e menu
             autoHideMenuBar: true, // esconder menu
             parent: father,
-            modal: true
+            modal: true,
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js')
+            }
         })
         //iniciar a janela com o menu personalizado
     cliente.loadFile('./src/views/cliente.html')
@@ -93,7 +101,10 @@ const fornecedorWindow = () => {
             // titleBarStyle: 'hidden',  esconder barra de titulo e menu
             autoHideMenuBar: true, // esconder menu
             parent: father,
-            modal: true
+            modal: true,
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js')
+            }
         })
         //iniciar a janela com o menu personalizado
         fornecedores.loadFile('./src/views/fornecedores.html')
@@ -120,7 +131,10 @@ const produtoWindow = () => {
             // titleBarStyle: 'hidden',  esconder barra de titulo e menu
             autoHideMenuBar: true, // esconder menu
             parent: father,
-            modal: true
+            modal: true,
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js')
+            }
         })
         //iniciar a janela com o menu personalizado
         produtos.loadFile('./src/views/produtos.html')
@@ -144,7 +158,10 @@ const relatorioWindow = () => {
             // titleBarStyle: 'hidden',  esconder barra de titulo e menu
             autoHideMenuBar: true, // esconder menu
             parent: father,
-            modal: true
+            modal: true,
+            webPreferences: {
+                preload: path.join(__dirname, 'preload.js')
+            }
         })
         //iniciar a janela com o menu personalizado
         relatorio.loadFile('./src/views/relatorio.html')
@@ -161,13 +178,17 @@ app.whenReady().then(() => {
 
     //status de conexão 
     ipcMain.on('send-message', (event, message) => {
-        console.log(`<<< ${message}`)
-        statusConexao()
+        console.log(` ${message}`)
+        event.reply('db-message', 'conectado')
+    })
+    ipcMain.on('db-conect', async (event, message) => {
+        dbCon = await dbStatus()
+        event.reply('db-message', "conectado")
     })
 
     // desconctar do banco ao ecerrar a janela
     app.on('before-quit', async () => {
-        await desconectar()
+        await desconectar(dbCon)
     })
 
     createWindow()
@@ -257,7 +278,48 @@ const template = [
 
 ]
 
+//GRUD Create >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('new-client', async (event, cliente) => {
+    console.log(cliente) // teste do paso 2 do slide
+    //passo 3 cadastrar o cliente no mongodb
+    try {
+        // extrair os dados do objeto
+        const novoCliente = new clienteModel({
+            nomeCliente: cliente.nomeCli,
+            foneCliente: cliente.foneCli,
+            emailCliente: cliente.emailCli
+        })
+        await novoCliente.save() //save() - mongose
+        dialog.showMessageBox({
+            type:'info',
+            title:'aviso',
+            message:"Cliente cadastrado com sucesso!",
+            buttons:['ok']
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+//GRUD Read >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+//GRUD update >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+//GRUD delate >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 //---------------------------------------------------------
+
+
+
+
 // função que verrifica o status da conexao
 const statusConexao = async () => {
     try {

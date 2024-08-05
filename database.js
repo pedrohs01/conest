@@ -6,25 +6,42 @@
 // importa a blibioteca
 const mongoose = require('mongoose')
 
-let url = "mongodb://admin:pti%402018@10.26.45.201:27017/?authSource=admin"
+let url = "mongodb+srv://admin:senac123@clusterconest.lbtakyr.mongodb.net/"
+
+// variavel para armazenar o status de oonexaão
+let isConnected = false
+
+//status de conexãp
+const dbStatus = async () => {
+    if (isConnected === false) {
+        await conectar()
+    }
+}
 
 const conectar = async () => {
-    try {
-        await mongoose.connect(url)
-        console.log("mongodb conectado")
-    } catch (error) {
-        console.log(`Problema detectado: ${error.message}`)
+    if (isConnected === false) {
+        try {
+            await mongoose.connect(url)
+            isConnected = true
+            console.log("Mongodb conectado")
+            return (isConnected)
+        } catch (error) {
+            console.log(`problema detctado: ${error}`)
+        }
     }
 }
 
 const desconectar = async () => {
-    try {
-        await mongoose.disconnect(url)
-        console.log("mongodb desconectado")
-    } catch (error) {
-        console.log(`Problema detectado: ${error.message}`)
+    if (isConnected === true) {
+        try {
+            await mongoose.disconnect(url)
+            isConnected = false
+            console.log("mongodb desconctado")
+        } catch (error) {
+            console.log(`problema detctado: ${error}`)
+        }
     }
 }
 
 // exporta os metodos conctar e desconectar
-module.exports = {conectar, desconectar}
+module.exports = {dbStatus, desconectar}
