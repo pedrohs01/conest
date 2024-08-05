@@ -9,6 +9,7 @@ const { dbStatus, desconectar } = require('./database.js')
 let dbCon = null
 // importação do Schema
 const clienteModel = require('./src/models/Cliente.js')
+const fornecedorModel = require('./src/models/Fornecedor.js')
 
 //janela principal (definir o objeto win como variavel)
 let win
@@ -294,6 +295,38 @@ ipcMain.on('new-client', async (event, cliente) => {
             type:'info',
             title:'aviso',
             message:"Cliente cadastrado com sucesso!",
+            buttons:['ok']
+        })
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+
+ipcMain.on('new-forne', async (event, fornecedor) => {
+    console.log(fornecedor) // teste do paso 2 do slide
+    //passo 3 cadastrar o cliente no mongodb
+    try {
+        // extrair os dados do objeto
+        const novoFornecedor = new fornecedorModel({
+            razaoSocial: fornecedor.razaoFo,
+            cnpjForne: fornecedor.cnpjFo,
+            foneForne: fornecedor.foneFo,
+            emailForne: fornecedor.emailFo,
+            cepForne: fornecedor.cepFo,
+            logradouroForne: fornecedor.logradouroFo,
+            numeroForne: fornecedor.numeroFo,
+            bairroForne: fornecedor.bairroFo,
+            cidadeForne: fornecedor.cidadeFo,
+            ufForne: fornecedor.ufFo,
+            complementoForne: fornecedor.complementoFo
+        })
+        await novoFornecedor.save() //save() - mongose
+        dialog.showMessageBox({
+            type:'info',
+            title:'aviso',
+            message:"Fornecedor cadastrado com sucesso!",
             buttons:['ok']
         })
     } catch (error) {
