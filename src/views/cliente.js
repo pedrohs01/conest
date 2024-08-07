@@ -3,6 +3,24 @@
  * clientes
  */
 
+//musar probriedades do documeno ao iniciar (ux)
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('inputSearch').focus()
+    btnCreate.disabled = true
+    btnUpdate.disabled = true
+    btnDelete.disabled = true
+})
+
+// Alteterar comportamento do enter dentro do formulario(relacionar ao botão de busca)
+// UX
+document.getElementById('frmClient').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        event.preventDefault()
+        // excutar a função associada ao botão buscar
+        buscarCliente()
+    }
+})
+
 //GRUD creat >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // captura do inputs do formulario
 let formCliente = document.getElementById('frmClient')
@@ -27,6 +45,40 @@ formCliente.addEventListener('submit', async (event) => {
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //GRUD read >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// array(vetor) ussado na rederização dos dados dos clientes
+let arrayCliente = []
+// funçao que vai enviar ao mian um pedido de busca pelo nome
+function buscarCliente() {
+    let nomeCliente = document.getElementById('inputSearch').value.trim()
+    if(nomeCliente === "") {
+        //validar capo obrigatorio
+        api.infoSearcDialog()
+    } else {
+        //enviar o pedido de busca
+        api.searchClient(nomeCliente)
+    }
+    // Foco no campo de busca(UX)
+    api.focusSearch((args) => {
+        document.getElementById('inputSearch').focus()
+    })
+    //setar o nome do cliente e habilitar o recadastramento
+    api.nameClient((args) => {
+        let setarNomeCliente = document.getElementById('inputSearch').value.trim()
+        document.getElementById('inputName').value = setarNomeCliente
+        document.getElementById('inputSearch').value = ""
+        document.getElementById('inputSearch').blur()
+        document.getElementById('inputSearch').disabled = true
+        document.getElementById('inputName').focus()
+        btnRead.disabled = true
+        btnCreate.disabled = false
+    })
+    // limpara caixa dee busca
+    api.clearSearch((args) => {
+        document.getElementById('inputSearch').value = ""
+        document.getElementById('inputSearch').focus()
+    })
+    
+}
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -37,3 +89,13 @@ formCliente.addEventListener('submit', async (event) => {
 //GRUD delate >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+//reset do form
+function resetForm() {
+    document.getElementById('inputSearch').focus()
+    btnCreate.disabled = true
+    btnUpdate.disabled = true
+    btnDelete.disabled = true
+    document.getElementById('inputSearch').disabled = false
+    btnRead.disabled = false
+}

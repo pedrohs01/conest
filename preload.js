@@ -8,7 +8,12 @@ contextBridge.exposeInMainWorld('api', {
     openRelatorio: () => ipcRenderer.send('open-relatorio'),
     dbMessage: (message) => ipcRenderer.on('db-message', message),
     newClient: (cliente) => ipcRenderer.send('new-client', cliente),
-    newForne: (fornecedor) => ipcRenderer.send('new-forne', fornecedor)
+    newForne: (fornecedor) => ipcRenderer.send('new-forne', fornecedor),
+    infoSearcDialog: () => ipcRenderer.send('dialog-infoSearcDialog'),
+    focusSearch: (args) => ipcRenderer.on('focus-search', args),
+    searchClient: (nomeCliente) => ipcRenderer.send('search-client', nomeCliente),
+    nameClient: (args) => ipcRenderer.on('name-client', args),
+    clearSearch: (args) => ipcRenderer.on('clear-search', args)
 })
 
 ipcRenderer.send('db-conect')

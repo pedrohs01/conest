@@ -336,6 +336,48 @@ ipcMain.on('new-forne', async (event, fornecedor) => {
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //GRUD Read >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+// Aviso (Buscar: prechimento capo og)
+ipcMain.on('dialog-infoSearcDialog', (event) => {
+    dialog.showMessageBox({
+        type: 'warning',
+        title: 'Atencao',
+        message: 'prencha o campo',
+        buttons: ['ok']
+    })
+    event.reply('focus-search')
+})
+//recebimento do pedido de busaca pelo nome
+ipcMain.on('search-client', async (event, nomeCliente) => {
+    console.log(nomeCliente)
+    //passo 2 : busca banco de dados
+    try {
+        // find() "método de busca" newregex 'i' case insensiteve
+        const dadosClientes = await clienteModel.find({nomeCliente: new RegExp(nomeCliente, 'i') })
+        console.log(dadosClientes)
+        // ux -> se p cliente noa estiver cadastrado avisar o usuario e habolitar o cadastro
+        if(dadosClientes.length === 0){
+            dialog.showMessageBox({
+                type: 'warning',
+                title: 'Atenção',
+                message: 'Cliente não cadastrado.\ndeseja cadastarar',
+                buttons: ['sim','nao'],
+                defaultId: 0
+            }).then((result)=>{
+                if (result.response === 0) {
+                    //settar o nome do cliente no form e habilitar o cadastro
+                    event.reply('name-client')
+                } else {
+                    // limpar a caixa de busca
+                    event.reply('clear-search')
+                }
+            })
+        }   else {
+            //passo 4 (enviar os dados dos clientes ao renderizador)
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
