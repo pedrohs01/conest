@@ -9,11 +9,23 @@ contextBridge.exposeInMainWorld('api', {
     dbMessage: (message) => ipcRenderer.on('db-message', message),
     newClient: (cliente) => ipcRenderer.send('new-client', cliente),
     newForne: (fornecedor) => ipcRenderer.send('new-forne', fornecedor),
+
     infoSearcDialog: () => ipcRenderer.send('dialog-infoSearcDialog'),
     focusSearch: (args) => ipcRenderer.on('focus-search', args),
     searchClient: (nomeCliente) => ipcRenderer.send('search-client', nomeCliente),
     nameClient: (args) => ipcRenderer.on('name-client', args),
-    clearSearch: (args) => ipcRenderer.on('clear-search', args)
+    clearSearch: (args) => ipcRenderer.on('clear-search', args),
+    dataClient: (dadosCliente) => ipcRenderer.on('data-client',dadosCliente),
+    updateClient: (cliente) => ipcRenderer.send('upadate-client', cliente),
+    deleteClient: (idCli) => ipcRenderer.send('delete-client', idCli),
+
+    //fazer mais 3 novos para o forne info/focus/clear
+    infoSearcDialogf: () => ipcRenderer.send('dialog-infoSearcDialogf'),
+    focusSearchf: (args) => ipcRenderer.on('focus-searchf', args),
+    searchForne: (nomeFornecedor) => ipcRenderer.send('search-forne', nomeFornecedor),
+    nameForne: (args) => ipcRenderer.on('name-forne', args),
+    clearSearchf: (args) => ipcRenderer.on('clear-searchf', args),
+    dataForne: (dadosFornecedor) => ipcRenderer.on('data-forne',dadosFornecedor)
 })
 
 ipcRenderer.send('db-conect')

@@ -11,19 +11,29 @@ document.addEventListener('DOMContentLoaded', () => {
     btnDelete.disabled = true
 })
 
-// Alteterar comportamento do enter dentro do formulario(relacionar ao botão de busca)
+// Função para manipular o evento enter
 // UX
-document.getElementById('frmClient').addEventListener('keydown', (event) => {
+function teclaEnter(event){
     if (event.key === 'Enter') {
         event.preventDefault()
         // excutar a função associada ao botão buscar
-        buscarCliente()
+       buscarCliente()
     }
-})
+}   
+
+// Adicionar o função de manipulção do enveto de tecla enter
+document.getElementById('frmClient').addEventListener('keydown',
+teclaEnter)
+
+//função para remover o manipulador de enventos
+function removerTeclaEnter() {
+    document.getElementById('frmClient').removeEventListener('keydown',teclaEnter)
+}
 
 //GRUD creat >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 // captura do inputs do formulario
 let formCliente = document.getElementById('frmClient')
+let idCliente = document.getElementById('inputId')
 let nomeCliente = document.getElementById('inputName')
 let foneCliente = document.getElementById('inputPhone')
 let emailCliente = document.getElementById('inputAddress')
@@ -63,9 +73,14 @@ function buscarCliente() {
     })
     //setar o nome do cliente e habilitar o recadastramento
     api.nameClient((args) => {
+        //restaurar a tecla enter ao padrão
+        removerTeclaEnter()
         let setarNomeCliente = document.getElementById('inputSearch').value.trim()
         document.getElementById('inputName').value = setarNomeCliente
         document.getElementById('inputSearch').value = ""
+        document.getElementById('inputPhone').value = ""
+        document.getElementById('inputAddress').value = ""
+        document.getElementById('inputId').value = ""
         document.getElementById('inputSearch').blur()
         document.getElementById('inputSearch').disabled = true
         document.getElementById('inputName').focus()
@@ -77,16 +92,50 @@ function buscarCliente() {
         document.getElementById('inputSearch').value = ""
         document.getElementById('inputSearch').focus()
     })
+    // receber do main.js os dados do cliente (passo 4)
+    api.dataClient((event, dadosCliente) => {
+        arrayCliente = JSON.parse(dadosCliente)
+        console.log(dadosCliente)
     
+    // passo 5 (final) percorrer o array, extrair os dados e setar os campos de texto (caixa input)
+    arrayCliente.forEach((c) => {
+        document.getElementById('inputId').value = c._id,
+        document.getElementById('inputName').value = c.nomeCliente,
+        document.getElementById('inputPhone').value = c.foneCliente,
+        document.getElementById('inputAddress').value = c.emailCliente
+        // limpar a caixa de busca (UX)
+        document.getElementById('inputSearch').value = ""
+
+        document.getElementById('btnUpdate').disabled = false
+        document.getElementById('btnDelete').disabled = false
+    })
+})
 }
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //GRUD update >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function editarCliente() {
+    //passo 1
+    const cliente = {
+        idCli: idCliente.value,
+        nomeCli: nomeCliente.value,
+        foneCli: foneCliente.value,
+        emailCli: emailCliente.value
+    }
+    console.log(cliente) //teste do passo 1
+    // passo 2: enviar o objeto cliente ao main
+    api.updateClient(cliente)
+}
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //GRUD delate >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function excluirCliente() {
+    let idCli = idCliente.value// passo 1 (obter o id do cliente)
+    console.log(idCli) //  teste passo 1 
+    api.deleteClient(idCli)  // passo 2 - enviar o id do cliente ao main
+}
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -98,4 +147,6 @@ function resetForm() {
     btnDelete.disabled = true
     document.getElementById('inputSearch').disabled = false
     btnRead.disabled = false
+    document.getElementById("frmClient").addEventListener("keydown", teclaEnter)
+    arrayCliente = []
 }

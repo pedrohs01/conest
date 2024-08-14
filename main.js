@@ -34,22 +34,22 @@ let about // bug de abertura
 
 const aboutWindow = () => {
     const father = BrowserWindow.getFocusedWindow()
-    if(father){
-    // nativeTheme.themeSource ='dark'
-    // se a janela about noa etiver aberta
-    if (!about) {
-        about = new BrowserWindow({
-            width: 360,
-            height: 220,
-            icon: './src/public/img/pacote.png',
-            resizable: false, // evitar o redimensionamento
-            // titleBarStyle: 'hidden',  esconder barra de titulo e menu
-            autoHideMenuBar: true, // esconder menu
-            parent: father,
-            modal: true
-        })
+    if (father) {
+        // nativeTheme.themeSource ='dark'
+        // se a janela about noa etiver aberta
+        if (!about) {
+            about = new BrowserWindow({
+                width: 360,
+                height: 220,
+                icon: './src/public/img/pacote.png',
+                resizable: false, // evitar o redimensionamento
+                // titleBarStyle: 'hidden',  esconder barra de titulo e menu
+                autoHideMenuBar: true, // esconder menu
+                parent: father,
+                modal: true
+            })
+        }
     }
-}
     //iniciar a janela com o menu personalizado
     about.loadFile('./src/views/sobre.html')
     // bug2 
@@ -59,12 +59,12 @@ const aboutWindow = () => {
 }
 
 
-let cliente 
+let cliente
 const clienteWindow = () => {
     const father = BrowserWindow.getFocusedWindow()
-    if(father){
-    // nativeTheme.themeSource ='dark'
-    // se a janela about noa etiver aberta
+    if (father) {
+        // nativeTheme.themeSource ='dark'
+        // se a janela about noa etiver aberta
         cliente = new BrowserWindow({
             width: 1280,
             height: 720,
@@ -79,10 +79,10 @@ const clienteWindow = () => {
             }
         })
         //iniciar a janela com o menu personalizado
-    cliente.loadFile('./src/views/cliente.html')
+        cliente.loadFile('./src/views/cliente.html')
     }
 }
-    
+
 
 
 // janela fornecedores
@@ -90,10 +90,10 @@ let fornecedores // bug de abertura
 
 const fornecedorWindow = () => {
     const father = BrowserWindow.getFocusedWindow()
-    if(father){
-    // nativeTheme.themeSource ='dark'
-    // se a janela about noa etiver aberta
-      
+    if (father) {
+        // nativeTheme.themeSource ='dark'
+        // se a janela about noa etiver aberta
+
         fornecedores = new BrowserWindow({
             width: 1280,
             height: 720,
@@ -111,8 +111,8 @@ const fornecedorWindow = () => {
         fornecedores.loadFile('./src/views/fornecedores.html')
     }
 }
-    
-   
+
+
 
 
 // janela produtos
@@ -120,10 +120,10 @@ let produtos // bug de abertura
 
 const produtoWindow = () => {
     const father = BrowserWindow.getFocusedWindow()
-    if(father){
-    // nativeTheme.themeSource ='dark'
-    // se a janela about noa etiver aberta
-     
+    if (father) {
+        // nativeTheme.themeSource ='dark'
+        // se a janela about noa etiver aberta
+
         produtos = new BrowserWindow({
             width: 800,
             height: 600,
@@ -147,11 +147,11 @@ let relatorio // bug de abertura
 
 const relatorioWindow = () => {
     const father = BrowserWindow.getFocusedWindow()
-    if(father){
-    // nativeTheme.themeSource ='dark'
-    // se a janela about noa etiver aberta
-     
-    relatorio = new BrowserWindow({
+    if (father) {
+        // nativeTheme.themeSource ='dark'
+        // se a janela about noa etiver aberta
+
+        relatorio = new BrowserWindow({
             width: 800,
             height: 600,
             icon: './src/public/img/pacote.png',
@@ -166,10 +166,10 @@ const relatorioWindow = () => {
         })
         //iniciar a janela com o menu personalizado
         relatorio.loadFile('./src/views/relatorio.html')
-    }    
+    }
 }
-    
-   
+
+
 
 
 
@@ -292,10 +292,10 @@ ipcMain.on('new-client', async (event, cliente) => {
         })
         await novoCliente.save() //save() - mongose
         dialog.showMessageBox({
-            type:'info',
-            title:'aviso',
-            message:"Cliente cadastrado com sucesso!",
-            buttons:['ok']
+            type: 'info',
+            title: 'aviso',
+            message: "Cliente cadastrado com sucesso!",
+            buttons: ['ok']
         })
     } catch (error) {
         console.log(error)
@@ -324,10 +324,10 @@ ipcMain.on('new-forne', async (event, fornecedor) => {
         })
         await novoFornecedor.save() //save() - mongose
         dialog.showMessageBox({
-            type:'info',
-            title:'aviso',
-            message:"Fornecedor cadastrado com sucesso!",
-            buttons:['ok']
+            type: 'info',
+            title: 'aviso',
+            message: "Fornecedor cadastrado com sucesso!",
+            buttons: ['ok']
         })
     } catch (error) {
         console.log(error)
@@ -341,7 +341,7 @@ ipcMain.on('dialog-infoSearcDialog', (event) => {
     dialog.showMessageBox({
         type: 'warning',
         title: 'Atencao',
-        message: 'prencha o campo',
+        message: 'pesquise o nome do cliente no campo de busca',
         buttons: ['ok']
     })
     event.reply('focus-search')
@@ -352,17 +352,17 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
     //passo 2 : busca banco de dados
     try {
         // find() "método de busca" newregex 'i' case insensiteve
-        const dadosClientes = await clienteModel.find({nomeCliente: new RegExp(nomeCliente, 'i') })
+        const dadosClientes = await clienteModel.find({ nomeCliente: new RegExp(nomeCliente, 'i') })
         console.log(dadosClientes)
         // ux -> se p cliente noa estiver cadastrado avisar o usuario e habolitar o cadastro
-        if(dadosClientes.length === 0){
+        if (dadosClientes.length === 0) {
             dialog.showMessageBox({
                 type: 'warning',
                 title: 'Atenção',
                 message: 'Cliente não cadastrado.\ndeseja cadastarar',
-                buttons: ['sim','nao'],
+                buttons: ['sim', 'nao'],
                 defaultId: 0
-            }).then((result)=>{
+            }).then((result) => {
                 if (result.response === 0) {
                     //settar o nome do cliente no form e habilitar o cadastro
                     event.reply('name-client')
@@ -371,8 +371,58 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
                     event.reply('clear-search')
                 }
             })
-        }   else {
+        } else {
             //passo 4 (enviar os dados dos clientes ao renderizador)
+            event.reply('data-client', JSON.stringify(dadosClientes))
+        }
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+
+
+
+//forne
+
+// Aviso (Buscar: prechimento capo og)
+ipcMain.on('dialog-infoSearcDialogf', (event) => {
+    dialog.showMessageBox({
+        type: 'warning',
+        title: 'Atencao',
+        message: 'pesquise o nome do fornecedor no campo de busca',
+        buttons: ['ok']
+    })
+    event.reply('focus-searchf')
+})
+//recebimento do pedido de busaca pelo nome
+ipcMain.on('search-forne', async (event, razaoSocial) => {
+    console.log(razaoSocial)
+    //passo 2 : busca banco de dados
+    try {
+        // find() "método de busca" newregex 'i' case insensiteve
+        const dadosFornecedor = await fornecedorModel.find({ razaoSocial: new RegExp(razaoSocial, 'i') })
+        console.log(dadosFornecedor)
+        // ux -> se p cliente noa estiver cadastrado avisar o usuario e habolitar o cadastro
+        if (dadosFornecedor.length === 0) {
+            dialog.showMessageBox({
+                type: 'warning',
+                title: 'Atenção',
+                message: 'Fornecedor não cadastrado.\ndeseja cadastarar',
+                buttons: ['sim', 'nao'],
+                defaultId: 0
+            }).then((result) => {
+                if (result.response === 0) {
+                    //settar o nome do cliente no form e habilitar o cadastro
+                    event.reply('name-forne')
+                } else {
+                    // limpar a caixa de busca
+                    event.reply('clear-searchf')
+                }
+            })
+        } else {
+            //passo 4 (enviar os dados dos clientes ao renderizador)
+            event.reply('data-forne', JSON.stringify(dadosFornecedor))
         }
     } catch (error) {
         console.log(error)
@@ -383,10 +433,57 @@ ipcMain.on('search-client', async (event, nomeCliente) => {
 
 
 //GRUD update >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('upadate-client', async (event, cliente) => {
+    console.log(cliente) // teste do paso 2 do slide
+    //passo 3 cadastrar o cliente no mongodb
+    try {
+        // extrair os dados do objeto
+        const clienteEditado = await clienteModel.findByIdAndUpdate(
+            cliente.idCli, {
+            nomeCliente: cliente.nomeCli,
+            foneCliente: cliente.foneCli,
+            emailCliente: cliente.emailCli
+        },
+            {
+                new: true
+            }
+        )
+        dialog.showMessageBox({
+            type: 'info',
+            title: 'aviso',
+            message: "Dados do cliente alterados com sucesso!",
+            buttons: ['ok']
+        })
+        event.reply('reset-form')
+    } catch (error) {
+        console.log(error)
+    }
+})
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //GRUD delate >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+ipcMain.on('delete-client', (event, idCli) => {
+    console.log(idCli) // teste do passo 2
+    //importante confirma a ação antes de apagar
+         dialog.showMessageBox({
+            type: 'warning',
+            title: 'Atenção',
+            message: 'quer apagar',
+            buttons: ['sim', 'nao'],
+            defaultId: 0
+        }).then(async(result) => {
+            if (result.response === 0) {
+                // passo 3
+                try {
+                    await clienteModel.findByIdAndDelete(idCli)
+                    event.reply('reset-form')
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        })
+})
 
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
