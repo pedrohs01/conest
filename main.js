@@ -460,6 +460,46 @@ ipcMain.on('upadate-client', async (event, cliente) => {
     }
 })
 
+
+
+
+
+
+ipcMain.on('upadate-forne', async (event, fornecedor) => {
+    console.log(fornecedor) // teste do paso 2 do slide
+    //passo 3 cadastrar o cliente no mongodb
+    try {
+        // extrair os dados do objeto
+        const fornecedorEditado = await fornecedorModel.findByIdAndUpdate(
+            fornecedor.idForne, {
+            razaoSocial: fornecedor.razaoFo,
+            foneForne: fornecedor.foneFo,
+            emailForne: fornecedor.emailFo,
+            cnpjForne: fornecedor.cnpjFo,
+            cepForne: fornecedor.cepFo,
+            logradouroForne: fornecedor.logradouroFo,
+            numeroForne: fornecedor.numeroFo,
+            bairroForne: fornecedor.bairroFo,
+            cidadeForne: fornecedor.cidadeFo,
+            ufForne: fornecedor.ufFo,
+            complementoForne: fornecedor.complementoFo
+        },
+            {
+                new: true
+            }
+        )
+        dialog.showMessageBox({
+            type: 'info',
+            title: 'aviso',
+            message: "Dados do fornecedor alterados com sucesso!",
+            buttons: ['ok']
+        })
+        event.reply('reset-form')
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //GRUD delate >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -477,6 +517,32 @@ ipcMain.on('delete-client', (event, idCli) => {
                 // passo 3
                 try {
                     await clienteModel.findByIdAndDelete(idCli)
+                    event.reply('reset-form')
+                } catch (error) {
+                    console.log(error)
+                }
+            }
+        })
+})
+
+
+
+
+
+ipcMain.on('delete-forne', (event, idForne) => {
+    console.log(idForne) // teste do passo 2
+    //importante confirma a ação antes de apagar
+         dialog.showMessageBox({
+            type: 'warning',
+            title: 'Atenção',
+            message: 'quer apagar o fornecedor',
+            buttons: ['sim', 'nao'],
+            defaultId: 0
+        }).then(async(result) => {
+            if (result.response === 0) {
+                // passo 3
+                try {
+                    await fornecedorModel.findByIdAndDelete(idForne)
                     event.reply('reset-form')
                 } catch (error) {
                     console.log(error)

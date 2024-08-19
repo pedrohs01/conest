@@ -64,7 +64,8 @@
             </div>
             <div class="col-md-1">
                 <label for="uf">UF</label>
-                <select id="uf" class="form-select" required>          
+                <select id="uf" class="form-select" required>    
+                    <option value=""></option>      
                     <option value="AC">AC</option>
                     <option value="AL">AL</option>
                     <option value="AP">AP</option>
@@ -100,8 +101,8 @@
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-success" id="btnCreate">Adicionar</button>
-                <button type="button" class="btn btn-warning" id="btnUpdate">Editar</button>
-                <button type="button" class="btn btn-danger" id="btnDelete">Excluir</button>
+                <button type="button" class="btn btn-warning" id="btnUpdate" onclick="editarFornecedor()">Editar</button>
+                <button type="button" class="btn btn-danger" id="btnDelete" onclick="excluirFornecedor()">Excluir</button>
                 <button type="reset" class="btn" id="btnReset" onclick="resetForm()"></button>
             </div>
         </form>

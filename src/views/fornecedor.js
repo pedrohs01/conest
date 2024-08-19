@@ -34,6 +34,7 @@ function removerTeclaEnter() {
 // captura do inputs do formulario
 let formFornecedor = document.getElementById('frmFornecedor')
 let razaoSocial = document.getElementById('inputName')
+let idfornecedor = document.getElementById('inputId')
 let cnpjForne = document.getElementById('inputCnpj')
 let foneForne = document.getElementById('inputPhone')
 let emailForne = document.getElementById('inputAddress')
@@ -142,6 +143,43 @@ function buscarFornecedor() {
 })
 }
 
+//GRUD update >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function editarFornecedor() {
+    const fornecedor = {
+        idForne: idfornecedor.value,
+        razaoFo: razaoSocial.value,
+        cnpjFo: cnpjForne.value,
+        foneFo: foneForne.value,
+        emailFo: emailForne.value,
+        cepFo: cepForne.value,
+        logradouroFo: logradouroForne.value,
+        numeroFo: numeroForne.value,
+        bairroFo: bairroForne.value,
+        cidadeFo: cidadeForne.value,
+        ufFo: ufForne.value,
+        complementoFo: complementoForne.value 
+    }
+    console.log(fornecedor)
+    api.updateForne(fornecedor)
+}
+
+
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+//GRUD delate >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+function excluirFornecedor() {
+    let idForne = idfornecedor.value
+    console.log(idForne)
+    api.deleteForne(idForne)
+}
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+api.resetForm((args) => {
+    resetForm()
+})  
+
 //reset do form
 function resetForm() {
     document.getElementById('inputSearch').focus()
@@ -152,4 +190,16 @@ function resetForm() {
     btnRead.disabled = false
     document.getElementById("frmFornecedor").addEventListener("keydown", teclaEnter)
     arrayFornecedor = []
+    document.getElementById('inputName').value = ""
+    document.getElementById('inputId').value = ""
+    document.getElementById('inputCnpj').value = ""
+    document.getElementById('inputPhone').value = ""
+    document.getElementById('inputAddress').value = ""
+    document.getElementById('inputCep').value = ""
+    document.getElementById('inputLogradouro').value = ""
+    document.getElementById('inputNumero').value = ""
+    document.getElementById('inputBairro').value = ""
+    document.getElementById('inputCidade').value = ""
+    document.getElementById('uf').value = ""
+    document.getElementById('inputComplemento').value = ""
 }

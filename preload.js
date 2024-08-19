@@ -18,14 +18,17 @@ contextBridge.exposeInMainWorld('api', {
     dataClient: (dadosCliente) => ipcRenderer.on('data-client',dadosCliente),
     updateClient: (cliente) => ipcRenderer.send('upadate-client', cliente),
     deleteClient: (idCli) => ipcRenderer.send('delete-client', idCli),
-
+    resetForm: (args) => ipcRenderer.on('reset-form', args),
+    
     //fazer mais 3 novos para o forne info/focus/clear
     infoSearcDialogf: () => ipcRenderer.send('dialog-infoSearcDialogf'),
     focusSearchf: (args) => ipcRenderer.on('focus-searchf', args),
     searchForne: (nomeFornecedor) => ipcRenderer.send('search-forne', nomeFornecedor),
     nameForne: (args) => ipcRenderer.on('name-forne', args),
     clearSearchf: (args) => ipcRenderer.on('clear-searchf', args),
-    dataForne: (dadosFornecedor) => ipcRenderer.on('data-forne',dadosFornecedor)
+    dataForne: (dadosFornecedor) => ipcRenderer.on('data-forne',dadosFornecedor),
+    updateForne: (fornecedor) => ipcRenderer.send('upadate-forne', fornecedor),
+    deleteForne: (idForne) => ipcRenderer.send('delete-forne', idForne)
 })
 
 ipcRenderer.send('db-conect')

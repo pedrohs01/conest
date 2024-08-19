@@ -149,4 +149,8 @@ function resetForm() {
     btnRead.disabled = false
     document.getElementById("frmClient").addEventListener("keydown", teclaEnter)
     arrayCliente = []
+    document.getElementById('inputId').value = ""
+    document.getElementById('inputName').value = ""
+    document.getElementById('inputPhone').value = ""
+    document.getElementById('inputAddress').value = ""
 }
