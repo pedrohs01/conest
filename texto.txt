@@ -1,0 +1,70 @@
+function editarFornecedor() {
+    const idfornecedor = document.getElementById('inputId');
+    const razaoSocial = document.getElementById('inputName');
+    const cnpjForne = document.getElementById('inputCnpj');
+    const foneForne = document.getElementById('inputPhone');
+    const emailForne = document.getElementById('inputAddress');
+    const cepForne = document.getElementById('inputCep');
+    const logradouroForne = document.getElementById('inputLogradouro');
+    const numeroForne = document.getElementById('inputNumero');
+    const bairroForne = document.getElementById('inputBairro');
+    const cidadeForne = document.getElementById('inputCidade');
+    const ufForne = document.getElementById('uf');
+    const complementoForne = document.getElementById('inputComplemento');
+ 
+   
+    if (!razaoSocial.value.trim()) {
+        razaoSocial.focus();
+        return;
+    }
+ 
+   
+    const fornecedor = {
+        idForne: idfornecedor.value,
+        razaoFo: razaoSocial.value,
+        cnpjFo: cnpjForne.value,
+        foneFo: foneForne.value,
+        emailFo: emailForne.value,
+        cepFo: cepForne.value,
+        logradouroFo: logradouroForne.value,
+        numeroFo: numeroForne.value,
+        bairroFo: bairroForne.value,
+        cidadeFo: cidadeForne.value,
+        ufFo: ufForne.value,
+        complementoFo: complementoForne.value
+    }
+ 
+    console.log(fornecedor);
+ 
+   
+    api.updateForne(fornecedor);
+}
+tem menu de contexto
+
+
+
+
+
+
+
+
+
+
+function editarFornecedor() {
+    const fornecedor = {
+        idForne: idfornecedor.value,
+        razaoFo: razaoSocial.value,
+        cnpjFo: cnpjForne.value,
+        foneFo: foneForne.value,
+        emailFo: emailForne.value,
+        cepFo: cepForne.value,
+        logradouroFo: logradouroForne.value,
+        numeroFo: numeroForne.value,
+        bairroFo: bairroForne.value,
+        cidadeFo: cidadeForne.value,
+        ufFo: ufForne.value,
+        complementoFo: complementoForne.value 
+    }
+    console.log(fornecedor)
+    api.updateForne(fornecedor)
+}

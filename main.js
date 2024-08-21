@@ -470,6 +470,25 @@ ipcMain.on('upadate-forne', async (event, fornecedor) => {
     //passo 3 cadastrar o cliente no mongodb
     try {
         // extrair os dados do objeto
+        if(fornecedor.razaoFo === "" ||
+        fornecedor.cnpjFo === "" ||
+        fornecedor.foneFo === "" ||
+        fornecedor.emailFo === "" ||
+        fornecedor.cepFo === "" ||
+        fornecedor.logradouroFo === "" ||
+        fornecedor.numeroFo === "" ||
+        fornecedor.bairroFo === "" ||
+        fornecedor.cidadeFo === "" ||
+        fornecedor.ufFo === ""
+        ){
+        dialog.showMessageBox({
+            type:'error',
+            title: "Atenção!",
+            message: "Preencha os campos vazios"
+        })
+        return
+        }
+        
         const fornecedorEditado = await fornecedorModel.findByIdAndUpdate(
             fornecedor.idForne, {
             razaoSocial: fornecedor.razaoFo,
